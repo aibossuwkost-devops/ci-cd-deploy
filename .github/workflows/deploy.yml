@@ -38,3 +38,11 @@ jobs:
             -o StrictHostKeyChecking=yes \
             scripts/hello.sh \
             root@${{ secrets.SSH_HOST }}:/var/www/ci-cd-deploy/
+
+      - name: Run script on server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 \
+            -p ${{ secrets.SSH_PORT }} \
+            -o StrictHostKeyChecking=yes \
+            root@${{ secrets.SSH_HOST }} \
+            "bash /var/www/ci-cd-deploy/hello.sh"
