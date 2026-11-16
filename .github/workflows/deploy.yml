@@ -16,6 +16,9 @@ jobs:
       - name: Run script
         run: bash scripts/hello.sh
 
+      - name: Build application
+        run: bash scripts/build.sh
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
