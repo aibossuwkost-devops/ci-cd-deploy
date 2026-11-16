@@ -25,14 +25,6 @@ jobs:
           name: app-build
           path: build/
 
-      - name: Copy build to server
-        run: |
-          scp -i ~/.ssh/id_ed25519 \
-            -P ${{ secrets.SSH_PORT }} \
-            -o StrictHostKeyChecking=yes \
-            build/build.txt \
-            root@${{ secrets.SSH_HOST }}:/var/www/ci-cd-deploy/
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -54,6 +46,14 @@ jobs:
             -P ${{ secrets.SSH_PORT }} \
             -o StrictHostKeyChecking=yes \
             scripts/hello.sh \
+            root@${{ secrets.SSH_HOST }}:/var/www/ci-cd-deploy/
+
+      - name: Copy build to server
+        run: |
+          scp -i ~/.ssh/id_ed25519 \
+            -P ${{ secrets.SSH_PORT }} \
+            -o StrictHostKeyChecking=yes \
+            build/build.txt \
             root@${{ secrets.SSH_HOST }}:/var/www/ci-cd-deploy/
 
       - name: Run script on server
