@@ -63,3 +63,18 @@ jobs:
             -o StrictHostKeyChecking=yes \
             root@${{ secrets.SSH_HOST }} \
             "bash /var/www/ci-cd-deploy/hello.sh"
+
+      - name: Verify build on server
+        run: |
+          scp -i ~/.ssh/id_ed25519 \
+            -P ${{ secrets.SSH_PORT }} \
+            -o StrictHostKeyChecking=yes \
+            scripts/verify.sh \
+            root@${{ secrets.SSH_HOST }}:/var/www/ci-cd-deploy/
+
+          ssh -i ~/.ssh/id_ed25519 \
+            -p ${{ secrets.SSH_PORT }} \
+            -o StrictHostKeyChecking=yes \
+            root@${{ secrets.SSH_HOST }} \
+            "bash /var/www/ci-cd-deploy/verify.sh"
+
